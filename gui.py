@@ -77,11 +77,13 @@ class LinkDialogue(QDialog):
         if not self.user_url:
             QMessageBox.warning(mw,'Link is not provided','Please, provide a link for you word or phrase.')
             return
+        if not self.user_url.startswith('https://'):
+            self.user_url = f'https://dictionary.cambridge.org/us/dictionary/english/{self.user_url.replace(" ","-")}'
 
         downloader = mw.cddownloader
         #downloader.clean_up()
         downloader.user_url = self.user_url
-        downloader.get_word_defs()        
+        downloader.get_word_defs()
         self.setResult(QDialog.Accepted)
         self.done(QDialog.Accepted)
 
